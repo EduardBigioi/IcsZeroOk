@@ -26,8 +26,16 @@ namespace IcsZeroOK
 
         private void InitGame()
         {
-            CreateBoard();
+            if (FirstRun())
+                CreateBoard();
+            else
+                ResetBoard();
             currentUser = 1;
+        }
+
+        private bool FirstRun()
+        {
+            return board[0, 0] == null;
         }
 
         private void CreateBoard()
