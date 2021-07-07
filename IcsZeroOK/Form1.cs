@@ -13,17 +13,7 @@ namespace IcsZeroOK
     public partial class mainForm : System.Windows.Forms.Form
     {
         int currentPlayer;
-        const int firstPlayer = 1;
-        const string firstPlayerText = "?";
-        const int secondPlayer = 2;
-        const string secondPlayerText = ":)";
-        string firstPlayerName = "Toni";
-        string secondPlayerName = "Popescu";
-        const int boardSize = 3;
-        Color boardColor = Color.Lime;
-        Color hoverColor = Color.White;
-
-        Label[,] board = new Label[boardSize, boardSize];
+        Label[,] board = new Label[Constants.boardSize, Constants.boardSize];
         public mainForm()
         {
             InitializeComponent();
@@ -40,7 +30,7 @@ namespace IcsZeroOK
                 CreateBoard();
             else
                 ResetBoard();
-            currentPlayer = firstPlayer;
+            currentPlayer = Constants.firstPlayer;
         }
 
         private bool FirstRun()
@@ -50,18 +40,18 @@ namespace IcsZeroOK
 
         private void CreateBoard()
         {
-            for (int i = 0; i < boardSize; i++)
+            for (int i = 0; i < Constants.boardSize; i++)
             {
-                for (int j = 0; j < boardSize; j++)
+                for (int j = 0; j < Constants.boardSize; j++)
                 {
 
                     board[i, j] = new Label();
 
                     this.board[i, j].BackColor = System.Drawing.Color.Lime;
-                    this.board[i, j].Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    this.board[i, j].Left = 100 + j * 54;
-                    this.board[i, j].Top = 50 + i * 54;
-                    this.board[i, j].Size = new System.Drawing.Size(50, 50);
+                    this.board[i, j].Font = new System.Drawing.Font("Microsoft Sans Serif", (Constants.CellSize-10)/2, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    this.board[i, j].Left = Constants.LeftBoardPosition + j * (Constants.CellSize + Constants.CellPadding);
+                    this.board[i, j].Top = Constants.TopBoardPosition + i * (Constants.CellSize + Constants.CellPadding);
+                    this.board[i, j].Size = new System.Drawing.Size(Constants.CellSize, Constants.CellSize);
                     this.board[i, j].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 
                     this.board[i, j].Click += Play;
@@ -79,15 +69,15 @@ namespace IcsZeroOK
         private void Play(object sender, EventArgs e)
         {
             if (((Label)sender).Text == "")
-                if (currentPlayer == firstPlayer)
+                if (currentPlayer == Constants.firstPlayer)
                 {
-                    ((Label)sender).Text = firstPlayerText;
-                    currentPlayer = secondPlayer;
+                    ((Label)sender).Text = Constants.firstPlayerText;
+                    currentPlayer = Constants.secondPlayer;
                 }
                 else
                 {
-                    ((Label)sender).Text = secondPlayerText;
-                    currentPlayer = firstPlayer;
+                    ((Label)sender).Text = Constants.secondPlayerText;
+                    currentPlayer = Constants.firstPlayer;
                 }
 
             int winner = CheckWinner();
@@ -100,9 +90,9 @@ namespace IcsZeroOK
 
         private void ResetBoard()
         {
-            for (int i = 0; i < boardSize; i++)
+            for (int i = 0; i < Constants.boardSize; i++)
             {
-                for (int j = 0; j < boardSize; j++)
+                for (int j = 0; j < Constants.boardSize; j++)
                 {
 
                     board[i, j].Text = "";
@@ -112,41 +102,41 @@ namespace IcsZeroOK
         }
         private void ShowWinner(int winner)
         {
-            if (winner == firstPlayer) MessageBox.Show("A castigat " + firstPlayerName);
-            if (winner == secondPlayer) MessageBox.Show("A castigat " + secondPlayerName);
+            if (winner == Constants.firstPlayer) MessageBox.Show("A castigat " + Constants.firstPlayerName);
+            if (winner == Constants.secondPlayer) MessageBox.Show("A castigat " + Constants.secondPlayerName);
 
         }
 
         private int CheckWinner()
         {
-            for (int i = 0; i < boardSize; i++)
+            for (int i = 0; i < Constants.boardSize; i++)
             {
                 if (board[i, 0].Text == board[i, 1].Text &&
                     board[i, 1].Text == board[i, 2].Text && board[i, 0].Text != "")
-                        return board[i, 0].Text == firstPlayerText ? 1 : 2;
+                        return board[i, 0].Text == Constants.firstPlayerText ? 1 : 2;
                 if (board[0, i].Text == board[1, i].Text &&
                     board[1, i].Text == board[2, i].Text && board[0, i].Text != "")
-                        return board[0, i].Text == firstPlayerText ? 1 : 2;
+                        return board[0, i].Text == Constants.firstPlayerText ? 1 : 2;
             }
 
             if (board[0, 0].Text == board[1, 1].Text &&
                     board[1, 1].Text == board[2, 2].Text && board[0, 0].Text != "")
-                        return board[0, 0].Text == firstPlayerText ? 1 : 2;
+                        return board[0, 0].Text == Constants.firstPlayerText ? 1 : 2;
  
             if (board[2, 0].Text == board[1, 1].Text &&
                     board[1, 1].Text == board[0, 2].Text && board[2, 0].Text != "")
-                        return board[2, 0].Text == firstPlayerText ? 1 : 2;        
+                        return board[2, 0].Text == Constants.firstPlayerText ? 1 : 2;        
             return 0;
         }
 
         private void OnMouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).BackColor = boardColor;
+            ((Label)sender).BackColor = Constants.boardColor;
         }
 
         private void OnMouseEnter(object sender, EventArgs e)
         {
-            ((Label)sender).BackColor = hoverColor;
+            ((Label)sender).BackColor = Constants.hoverColor;
         }
 
         private void testButton_Click(object sender, EventArgs e)
