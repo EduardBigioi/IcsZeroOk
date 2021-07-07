@@ -36,7 +36,7 @@ namespace IcsZeroOK
             {
                 for (int j = 0; j < 3; j++)
                 {
-                   
+
                     board[i, j] = new Label();
 
                     this.board[i, j].BackColor = System.Drawing.Color.Lime;
@@ -52,7 +52,7 @@ namespace IcsZeroOK
 
 
                     Controls.Add(board[i, j]);
-                    
+
                 }
             }
 
@@ -61,7 +61,7 @@ namespace IcsZeroOK
         private void Play(object sender, EventArgs e)
         {
             if (((Label)sender).Text == "")
-                if (currentUser==1)
+                if (currentUser == 1)
                 {
                     ((Label)sender).Text = "0";
                     currentUser = 2;
@@ -72,17 +72,58 @@ namespace IcsZeroOK
                     currentUser = 1;
                 }
 
-            //int winner = Winner();
-            //if (winner != 0)
-            //{
-            //    ShowWinner(winner);
-            //    ResetBoard();
-            //}
+            int winner = CheckWinner();
+            if (winner != 0)
+            {
+                ShowWinner(winner);
+                ResetBoard();
+            }
+        }
+
+        private void ResetBoard()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+
+                    board[i, j].Text = "";
+
+                }
+            }
+        }
+        private void ShowWinner(int winner)
+        {
+            if (winner == 1) MessageBox.Show("A castigat Toni");
+            if (winner == 2) MessageBox.Show("A castigat Gigi");
+
+        }
+
+        private int CheckWinner()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (board[i, 0].Text == board[i, 1].Text &&
+                    board[i, 1].Text == board[i, 2].Text && board[i, 0].Text != "")
+                        return board[i, 0].Text == "0" ? 1 : 2;
+                if (board[0, i].Text == board[1, i].Text &&
+                    board[1, i].Text == board[2, i].Text && board[0, i].Text != "")
+                        return board[0, i].Text == "0" ? 1 : 2;
+            }
+
+            if (board[0, 0].Text == board[1, 1].Text &&
+                    board[1, 1].Text == board[2, 2].Text && board[0, 0].Text != "")
+                        return board[0, 0].Text == "0" ? 1 : 2;
+ 
+            if (board[2, 0].Text == board[1, 1].Text &&
+                    board[1, 1].Text == board[0, 2].Text && board[2, 0].Text != "")
+                        return board[2, 0].Text == "0" ? 1 : 2;        
+            return 0;
         }
 
         private void OnMouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).BackColor = Color.Lime;            
+            ((Label)sender).BackColor = Color.Lime;
         }
 
         private void OnMouseEnter(object sender, EventArgs e)
