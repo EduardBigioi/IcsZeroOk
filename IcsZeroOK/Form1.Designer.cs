@@ -29,13 +29,25 @@ namespace IcsZeroOK
         /// </summary>
         private void InitializeComponent()
         {
+            this.newGameButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // newGameButton
+            // 
+            this.newGameButton.Location = new System.Drawing.Point(180, 327);
+            this.newGameButton.Name = "newGameButton";
+            this.newGameButton.Size = new System.Drawing.Size(75, 23);
+            this.newGameButton.TabIndex = 0;
+            this.newGameButton.Text = "New Game";
+            this.newGameButton.UseVisualStyleBackColor = true;
+            this.newGameButton.Click += new System.EventHandler(this.newGameButton_Click);
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(462, 382);
+            this.Controls.Add(this.newGameButton);
             this.Name = "mainForm";
             this.Text = "TicTacToe";
             this.ResumeLayout(false);
@@ -43,6 +55,8 @@ namespace IcsZeroOK
         }
 
         #endregion
+
+        private System.Windows.Forms.Button newGameButton;
     }
 }
 
