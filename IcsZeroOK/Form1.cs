@@ -36,6 +36,7 @@ namespace IcsZeroOK
             {
                 for (int j = 0; j < 3; j++)
                 {
+                   
                     board[i, j] = new Label();
 
                     this.board[i, j].BackColor = System.Drawing.Color.Lime;
@@ -51,6 +52,7 @@ namespace IcsZeroOK
 
 
                     Controls.Add(board[i, j]);
+                    
                 }
             }
 
@@ -58,7 +60,24 @@ namespace IcsZeroOK
 
         private void Play(object sender, EventArgs e)
         {
-            Console.WriteLine("Am facut click");
+            if (((Label)sender).Text == "")
+                if (currentUser==1)
+                {
+                    ((Label)sender).Text = "0";
+                    currentUser = 2;
+                }
+                else
+                {
+                    ((Label)sender).Text = "1";
+                    currentUser = 1;
+                }
+
+            //int winner = Winner();
+            //if (winner != 0)
+            //{
+            //    ShowWinner(winner);
+            //    ResetBoard();
+            //}
         }
 
         private void OnMouseLeave(object sender, EventArgs e)
