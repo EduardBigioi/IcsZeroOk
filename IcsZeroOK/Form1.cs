@@ -12,8 +12,18 @@ namespace IcsZeroOK
 {
     public partial class mainForm : System.Windows.Forms.Form
     {
-        int currentUser;
-        Label[,] board = new Label[3, 3];
+        int currentPlayer;
+        const int firstPlayer = 1;
+        const string firstPlayerText = "?";
+        const int secondPlayer = 2;
+        const string secondPlayerText = ":)";
+        string firstPlayerName = "Toni";
+        string secondPlayerName = "Popescu";
+        const int boardSize = 3;
+        Color boardColor = Color.Lime;
+        Color hoverColor = Color.White;
+
+        Label[,] board = new Label[boardSize, boardSize];
         public mainForm()
         {
             InitializeComponent();
@@ -30,7 +40,7 @@ namespace IcsZeroOK
                 CreateBoard();
             else
                 ResetBoard();
-            currentUser = 1;
+            currentPlayer = firstPlayer;
         }
 
         private bool FirstRun()
@@ -40,9 +50,9 @@ namespace IcsZeroOK
 
         private void CreateBoard()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < boardSize; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < boardSize; j++)
                 {
 
                     board[i, j] = new Label();
@@ -69,15 +79,15 @@ namespace IcsZeroOK
         private void Play(object sender, EventArgs e)
         {
             if (((Label)sender).Text == "")
-                if (currentUser == 1)
+                if (currentPlayer == firstPlayer)
                 {
-                    ((Label)sender).Text = "0";
-                    currentUser = 2;
+                    ((Label)sender).Text = firstPlayerText;
+                    currentPlayer = secondPlayer;
                 }
                 else
                 {
-                    ((Label)sender).Text = "1";
-                    currentUser = 1;
+                    ((Label)sender).Text = secondPlayerText;
+                    currentPlayer = firstPlayer;
                 }
 
             int winner = CheckWinner();
@@ -90,9 +100,9 @@ namespace IcsZeroOK
 
         private void ResetBoard()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < boardSize; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < boardSize; j++)
                 {
 
                     board[i, j].Text = "";
@@ -102,41 +112,41 @@ namespace IcsZeroOK
         }
         private void ShowWinner(int winner)
         {
-            if (winner == 1) MessageBox.Show("A castigat Toni");
-            if (winner == 2) MessageBox.Show("A castigat Gigi");
+            if (winner == firstPlayer) MessageBox.Show("A castigat " + firstPlayerName);
+            if (winner == secondPlayer) MessageBox.Show("A castigat " + secondPlayerName);
 
         }
 
         private int CheckWinner()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < boardSize; i++)
             {
                 if (board[i, 0].Text == board[i, 1].Text &&
                     board[i, 1].Text == board[i, 2].Text && board[i, 0].Text != "")
-                        return board[i, 0].Text == "0" ? 1 : 2;
+                        return board[i, 0].Text == firstPlayerText ? 1 : 2;
                 if (board[0, i].Text == board[1, i].Text &&
                     board[1, i].Text == board[2, i].Text && board[0, i].Text != "")
-                        return board[0, i].Text == "0" ? 1 : 2;
+                        return board[0, i].Text == firstPlayerText ? 1 : 2;
             }
 
             if (board[0, 0].Text == board[1, 1].Text &&
                     board[1, 1].Text == board[2, 2].Text && board[0, 0].Text != "")
-                        return board[0, 0].Text == "0" ? 1 : 2;
+                        return board[0, 0].Text == firstPlayerText ? 1 : 2;
  
             if (board[2, 0].Text == board[1, 1].Text &&
                     board[1, 1].Text == board[0, 2].Text && board[2, 0].Text != "")
-                        return board[2, 0].Text == "0" ? 1 : 2;        
+                        return board[2, 0].Text == firstPlayerText ? 1 : 2;        
             return 0;
         }
 
         private void OnMouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).BackColor = Color.Lime;
+            ((Label)sender).BackColor = boardColor;
         }
 
         private void OnMouseEnter(object sender, EventArgs e)
         {
-            ((Label)sender).BackColor = Color.Yellow;
+            ((Label)sender).BackColor = hoverColor;
         }
 
         private void testButton_Click(object sender, EventArgs e)
