@@ -149,5 +149,10 @@ namespace IcsZeroOK
 
             this.Controls.Add(testLabel);
         }
+
+        private void mainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
